@@ -8,6 +8,8 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent}
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
 
     @IBOutlet private var tableView: UITableView!
@@ -23,7 +25,8 @@ final class ImagesListViewController: UIViewController {
         if segue.identifier == ShowSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
+            let imageName = photosName[indexPath.row]
+            let image = UIImage(named: "\(imageName)_full_size") ?? UIImage(named: imageName)
             viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
