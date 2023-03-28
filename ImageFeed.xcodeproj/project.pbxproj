@@ -18,7 +18,7 @@
 		FAB7216129A4EEDB00AFF8FA /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB7216029A4EEDB00AFF8FA /* ImagesListCell.swift */; };
 		FAB7216829A4F47000AFF8FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB7216729A4F47000AFF8FA /* LaunchScreen.storyboard */; };
 		FAC109E829B1DCF8001A59FB /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC109E729B1DCF8001A59FB /* SingleImageViewController.swift */; };
-		FAD57EA129CC35910020407C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD57E9F29CC35910020407C /* Main.storyboard */; };
+		FAD24E9129D05F3800CF93CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD24E9029D05F3800CF93CB /* Main.storyboard */; };
 		FAD57EA429CC39200020407C /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD57EA229CC391F0020407C /* OAuth2Service.swift */; };
 		FAD57EA529CC39200020407C /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD57EA329CC39200020407C /* OAuth2TokenStorage.swift */; };
 		FAD57EA929CC39740020407C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD57EA829CC39740020407C /* SplashViewController.swift */; };
@@ -39,7 +39,7 @@
 		FAB7216029A4EEDB00AFF8FA /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		FAB7216729A4F47000AFF8FA /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAC109E729B1DCF8001A59FB /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
-		FAD57EA029CC35910020407C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../../../../Downloads/Sprint_10_-_Lesson_7_-_1_-_SplashViewController.swift/Image Feed/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
+		FAD24E9029D05F3800CF93CB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		FAD57EA229CC391F0020407C /* OAuth2Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
 		FAD57EA329CC39200020407C /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 		FAD57EA829CC39740020407C /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		FA0789E829A0DCA80074A2BF = {
 			isa = PBXGroup;
 			children = (
-				FAD57E9F29CC35910020407C /* Main.storyboard */,
+				FAD24E9029D05F3800CF93CB /* Main.storyboard */,
 				FAB7216729A4F47000AFF8FA /* LaunchScreen.storyboard */,
 				FA078A0229A0DCAA0074A2BF /* Info.plist */,
 				FAEA0C0129B36F09002F70B2 /* Assets.xcassets */,
@@ -203,7 +203,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAD57EA129CC35910020407C /* Main.storyboard in Resources */,
+				FAD24E9129D05F3800CF93CB /* Main.storyboard in Resources */,
 				FAEA0C0229B36F09002F70B2 /* Assets.xcassets in Resources */,
 				FAB7216829A4F47000AFF8FA /* LaunchScreen.storyboard in Resources */,
 			);
@@ -233,17 +233,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		FAD57E9F29CC35910020407C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FAD57EA029CC35910020407C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FA078A0329A0DCAA0074A2BF /* Debug */ = {
