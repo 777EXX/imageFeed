@@ -1,21 +1,20 @@
 import UIKit
-
-protocol AuthViewControllerDelegate: AnyObject {
-    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
+protocol AuthViewDelegate: AnyObject {
+    func authViewcontroller (_ vc: AuthViewController, didAuthenticateWithCode code: String)
 }
 
 final class AuthViewController: UIViewController {
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent}
-    private let ShowWebViewSegueIdentifier = "ShowWebView"
-
-    weak var delegate: AuthViewControllerDelegate?
-
+    
+    @IBOutlet private var loginButton: UIButton!
+    
+    weak var delegate: AuthViewDelegate?
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowWebViewSegueIdentifier {
+        if segue.identifier == SegueIdentifier.showWebViewSegueIdentifier {
             guard
                 let webViewViewController = segue.destination as? WebViewViewController
-            else { fatalError("Failed to prepare for \(ShowWebViewSegueIdentifier)") }
+            else { return assertionFailure("Failed to prepare for \(SegueIdentifier.showWebViewSegueIdentifier)") }
             webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
@@ -23,12 +22,13 @@ final class AuthViewController: UIViewController {
     }
 }
 
-extension AuthViewController: WebViewViewControllerDelegate {
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        delegate?.authViewController(self, didAuthenticateWithCode: code)
-    }
 
+extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true)
+    }
+    
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        delegate?.authViewcontroller(self, didAuthenticateWithCode: code)
     }
 }
