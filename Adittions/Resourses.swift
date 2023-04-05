@@ -7,7 +7,7 @@ enum Resourses {
         enum Profile {
             static let defaultAvatar = UIImage(named: "profile_image")
             static let logOut = UIImage(named: "logout_button")
-            static let mockPhoto = UIImage(named: "ivan_iva")
+            static let mockPhoto = UIImage(named: "Alex Vas")
         }
         
         enum TabBar {
@@ -18,9 +18,9 @@ enum Resourses {
     
     enum Strings {
         enum Profile {
-            static let name = "Ivan Ivanov"
-            static let nickname = "@ivanov_iva"
-            static let description = "Hello, world!"
+            static let name = "Alex Vas"
+            static let nickname = "@alex_vas"
+            static let description = "Hello, World!"
         }
     }
 }

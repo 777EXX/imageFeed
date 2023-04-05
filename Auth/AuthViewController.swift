@@ -4,6 +4,7 @@ protocol AuthViewDelegate: AnyObject {
 }
 
 final class AuthViewController: UIViewController {
+    private let ShowWebViewSegueIdentifier = "ShowWebView"
     
     @IBOutlet private var loginButton: UIButton!
     
@@ -11,10 +12,10 @@ final class AuthViewController: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SegueIdentifier.showWebViewSegueIdentifier {
+        if segue.identifier == ShowWebViewSegueIdentifier {
             guard
                 let webViewViewController = segue.destination as? WebViewViewController
-            else { return assertionFailure("Failed to prepare for \(SegueIdentifier.showWebViewSegueIdentifier)") }
+            else { return assertionFailure("Failed to prepare for \(ShowWebViewSegueIdentifier)") }
             webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
