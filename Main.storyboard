@@ -236,8 +236,6 @@
                                 <rect key="frame" x="16" y="758" width="382" height="48"/>
                                 <color key="backgroundColor" name="YPWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="343" id="OMg-jF-GnA"/>
-                                    <constraint firstAttribute="width" constant="343" id="bw9-hf-c6y"/>
                                     <constraint firstAttribute="height" constant="48" id="sVv-3i-m5g"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
