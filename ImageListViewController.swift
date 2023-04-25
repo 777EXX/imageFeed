@@ -1,3 +1,10 @@
+//
+//  TabBarController.swift
+//  ImageFeed
+//
+//  Created by Alexey on 06.04.2023.
+//
+
 import UIKit
 import SnapKit
 
