@@ -1,11 +1,15 @@
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     
+    weak var delegate: ImagesListCellDelegate?
+    static let reuseIdentifier = "ImagesListCell"
+    
     lazy var likeButton: UIButton! = {
         let button = UIButton()
-        button.setImage(Resourses.Images.likeInactive, for: .normal)
+        button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
         
         return button
     }()
@@ -32,18 +36,27 @@ final class ImagesListCell: UITableViewCell {
         return imageView
     }()
     
+     var lowerGradientImage: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        
+        return layer
+    }()
     
     override func layoutSubviews() {
         gradientImageView.layer.sublayers = nil
         
         setCellImage()
         setLikeButton()
+        
+        cellImage.backgroundColor = .white
+        
         setGradientView()
         setCellLabel()
     }
     
     override func prepareForReuse() {
         gradientImageView.layer.sublayers = nil
+        cellImage.kf.cancelDownloadTask()
     }
     
     private func setCellImage() {
@@ -61,7 +74,8 @@ final class ImagesListCell: UITableViewCell {
             make.leading.bottom.trailing.equalTo(cellImage)
             make.height.equalTo(30)
         }
-        setupGradient()
+        cellImage.addGradient(topColor: UIColor.imageStartGradient, botColor: UIColor.imageEndGradient,
+                              gradientLayer: lowerGradientImage)
     }
     
     private func setCellLabel() {
@@ -93,5 +107,9 @@ final class ImagesListCell: UITableViewCell {
         gradientLayer.frame  = CGRect(x: 0, y: 0, width: widht, height: height)
         gradientLayer.colors = [colorTop, colorBot]
         gradientImageView.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    @objc func likeButtonClicked() {
+        delegate?.imageListCellDidTapLike(self)
     }
 }

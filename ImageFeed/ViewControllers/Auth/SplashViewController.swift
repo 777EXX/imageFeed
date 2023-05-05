@@ -6,9 +6,11 @@ import SnapKit
 final class SplashViewController: UIViewController {
     
     private let screenLogoView = UIImageView()
+    private var profileInfoServiceObserver: NSObjectProtocol?
     
     private let imageListVicewController = ImageListViewController()
     private let oAuth2Service = OAuth2Service()
+    private let imageListService = ImagesListService.shared
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var username: String?
@@ -19,9 +21,12 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreen()
+        
         checkToken()
+        
+        addPhotoDownloadedObserver()
     }
-
+    
     private func switchToTabBarController() {
         let tabBarController = TabBarController()
         tabBarController.modalPresentationStyle = .overFullScreen
@@ -43,11 +48,10 @@ final class SplashViewController: UIViewController {
             switch result {
             case .success(let token):
                 OAuth2TokenStorage().token = token
-                switchToTabBarController()
+                self.imageListService.fetchPhotosNextPage()
+                self.switchToTabBarController()
                 self.fetchProfile(token: token)
-                UIBlockingProgressHUD.dismiss()
             case .failure(let error):
-                UIBlockingProgressHUD.dismiss()
                 self.showAlert()
                 print("ошибка получения bearer token  \(error)")
             }
@@ -59,8 +63,8 @@ final class SplashViewController: UIViewController {
             guard let self = self else { return }
             switch result {
             case .success(let profile):
-                username = profile.username
-                fetchImageProfile(token: token)
+                self.username = profile.username
+                self.fetchImageProfile(token: token)
                 NotificationCenter.default.post(
                     name: SplashViewController.didChangeNotification,
                     object: self,
@@ -114,7 +118,7 @@ final class SplashViewController: UIViewController {
     private func checkToken() {
         if isFirst {
             if let token = OAuth2TokenStorage().token {
-                switchToTabBarController()
+                imageListService.fetchPhotosNextPage()
                 fetchProfile(token: token)
             } else {
                 switchToAuthViewController()
@@ -124,8 +128,16 @@ final class SplashViewController: UIViewController {
             switchToTabBarController()
         }
     }
+    private func addPhotoDownloadedObserver() {
+        profileInfoServiceObserver = NotificationCenter.default.addObserver(
+            forName: ImagesListService.didChangeNotification,
+            object: nil,
+            queue: .main) { [weak self] _ in
+                guard let self = self else { return }
+                self.switchToTabBarController()
+            }
+    }
 }
-
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {

@@ -50,6 +50,12 @@ final class ProfileViewController: UIViewController {
         
         return button
     }()
+    
+     var downloadGradientImage: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        
+        return layer
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +86,27 @@ final class ProfileViewController: UIViewController {
             userLabel.text = profile.username
             accountDescription.text = profile.bio
         }
+    
+    @objc private func logoutProfile() {
+        let alertController = UIAlertController(title: "Пока, пока!",
+                                                message: "Уверены, что хотите выйти?",
+                                                preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Да", style: .cancel) { [weak self] _ in
+            guard let self = self else { return }
+            let splashVC = SplashViewController()
+            splashVC.modalPresentationStyle = .overFullScreen
+            
+            self.present(splashVC, animated: true)
+            OAuth2TokenStorage().deleteToken()
+            WebViewViewController.clean()
+        }
+        
+        let noAction = UIAlertAction(title: "Нет", style: .default)
+        alertController.addAction(cancelAction)
+        alertController.addAction(noAction)
+        
+        present(alertController, animated: true)
+    }
     
     // Profile observers:
     
@@ -151,13 +178,5 @@ final class ProfileViewController: UIViewController {
             make.centerY.equalTo(accountAvatarImage.snp.centerY)
             make.trailing.equalToSuperview().inset(26)
         }
-    }
-    
-    @objc private func logoutProfile() {
-        let splashVC = SplashViewController()
-        splashVC.modalPresentationStyle = .overFullScreen
-        
-        present(splashVC, animated: true)
-        OAuth2TokenStorage().deleteToken()
     }
 }

@@ -7,7 +7,7 @@ final class SingleImageViewController: UIViewController {
     var image: UIImage! {
         didSet {
             guard isViewLoaded else { return }
-            rescaleAndCenterImageInScrollView(image: image)
+            image = imageView.image
         }
     }
     
@@ -16,9 +16,9 @@ final class SingleImageViewController: UIViewController {
         return scrollView
     }()
     
-    private lazy var imageView: UIImageView! = {
+    lazy var imageView: UIImageView! = {
         let imageView = UIImageView()
-        imageView.image = image
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
@@ -47,7 +47,7 @@ final class SingleImageViewController: UIViewController {
         setActivityButton()
         setBackButton()
         
-        rescaleAndCenterImageInScrollView(image: image)
+        rescaleAndCenterImageInScrollView(image: imageView.image)
         
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
@@ -62,7 +62,6 @@ final class SingleImageViewController: UIViewController {
     
     private func setImageView() {
         scrollView.addSubview(imageView)
-        imageView.contentMode = .scaleToFill
         imageView.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalToSuperview()
         }
@@ -90,7 +89,7 @@ final class SingleImageViewController: UIViewController {
     }
     
     @objc private func didTapShareButton() {
-        guard let shareImage = image else { return }
+        guard let shareImage = imageView.image else { return }
         let shareController = UIActivityViewController(activityItems: [shareImage], applicationActivities: nil)
         present(shareController, animated: true)
     }
@@ -107,7 +106,8 @@ extension SingleImageViewController: UIScrollViewDelegate {
 }
 
 extension SingleImageViewController {
-    private func rescaleAndCenterImageInScrollView(image: UIImage){
+    func rescaleAndCenterImageInScrollView(image: UIImage?) {
+        guard let image = image else { return }
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
         view.layoutIfNeeded()

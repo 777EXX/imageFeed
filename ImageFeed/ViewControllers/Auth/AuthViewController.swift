@@ -32,6 +32,22 @@ final class AuthViewController: UIViewController {
         configurateScreen()
     }
     
+    private func swithToTabBarController() {
+        let tabBarController = TabBarController()
+        tabBarController.modalPresentationStyle = .overFullScreen
+        
+        present(tabBarController, animated: true)
+    }
+    
+    @objc private func switchToWebWiew() {
+       let viewController = WebViewViewController()
+        
+        viewController.delegate = self
+        viewController.modalPresentationStyle = .overFullScreen
+        
+        present(viewController, animated: true)
+    }
+    
     private func configurateScreen() {
         view.backgroundColor = .ypBlack
 
@@ -48,22 +64,6 @@ final class AuthViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalTo(-124)
         }
-    }
-    
-    private func swithToTabBarController() {
-        let tabBarController = TabBarController()
-        tabBarController.modalPresentationStyle = .overFullScreen
-        
-        present(tabBarController, animated: true)
-    }
-    
-    @objc private func switchToWebWiew() {
-       let viewController = WebViewViewController()
-        
-        viewController.delegate = self
-        viewController.modalPresentationStyle = .overFullScreen
-        
-        present(viewController, animated: true)
     }
 }
 

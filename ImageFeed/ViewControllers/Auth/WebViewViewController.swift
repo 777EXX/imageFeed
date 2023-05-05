@@ -59,6 +59,16 @@ final class WebViewViewController: UIViewController {
         super.viewDidDisappear(animated)
   }
     
+    static func clean() {
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes,
+                                                        for: [record], completionHandler: {})
+            }
+        }
+    }
+    
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.001
@@ -90,6 +100,7 @@ final class WebViewViewController: UIViewController {
         let url = urlComponents.url!
         
         let request = URLRequest(url: url)
+        print(request)
         self.webView.load(request)
     }
     

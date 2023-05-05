@@ -11,8 +11,8 @@ extension URLRequest {
     
     static func makeHTTPRequest(path: String,
                                 httpMethod: String,
-                                baseURL: URL = Constants.defaultBaseURL!) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
+                                baseURL: String = Constants.defaultBaseURL) -> URLRequest {
+        var request = URLRequest(url: URL(string: path, relativeTo: URL(string: baseURL))!)
         request.httpMethod = httpMethod
         
         return request
