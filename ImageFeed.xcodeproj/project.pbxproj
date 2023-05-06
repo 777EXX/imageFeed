@@ -52,7 +52,7 @@
 		D958EC4729C6448F0030CD81 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D985707629E6BE9F00814172 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		D9B77ECE29B3C832002E4BEB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		D9BBDE7829A026A60045A408 /* MyImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9BBDE7829A026A60045A408 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9BBDE7B29A026A60045A408 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9BBDE7D29A026A60045A408 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D9BBDE7F29A026A60045A408 /* ImagesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				D9BBDE8F29A02A2A0045A408 /* .gitignore */,
-				D9BBDE7A29A026A60045A408 /* MyImageFeed */,
+				D9BBDE7A29A026A60045A408 /* ImageFeed */,
 				D9BBDE7929A026A60045A408 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -162,12 +162,12 @@
 		D9BBDE7929A026A60045A408 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D9BBDE7829A026A60045A408 /* MyImageFeed.app */,
+				D9BBDE7829A026A60045A408 /* ImageFeed.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D9BBDE7A29A026A60045A408 /* MyImageFeed */ = {
+		D9BBDE7A29A026A60045A408 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
 				D9EF654629DD6F7600F8B36C /* Service */,
@@ -187,7 +187,7 @@
 				D9BBDE8929A026A80045A408 /* Info.plist */,
 				D985707629E6BE9F00814172 /* TabBarController.swift */,
 			);
-			path = MyImageFeed;
+			path = ImageFeed;
 			sourceTree = "<group>";
 		};
 		D9CBE71329CC6F5900DBEA75 /* AuthView */ = {
@@ -256,9 +256,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D9BBDE7729A026A60045A408 /* MyImageFeed */ = {
+		D9BBDE7729A026A60045A408 /* ImageFeed */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D9BBDE8C29A026A80045A408 /* Build configuration list for PBXNativeTarget "MyImageFeed" */;
+			buildConfigurationList = D9BBDE8C29A026A80045A408 /* Build configuration list for PBXNativeTarget "ImageFeed" */;
 			buildPhases = (
 				D9BBDE7429A026A60045A408 /* Sources */,
 				D9BBDE7529A026A60045A408 /* Frameworks */,
@@ -268,7 +268,7 @@
 			);
 			dependencies = (
 			);
-			name = MyImageFeed;
+			name = ImageFeed;
 			packageProductDependencies = (
 				D9CBE72F29DC1AAC00DBEA75 /* ProgressHUD */,
 				D902416829E3029E006D147B /* Kingfisher */,
@@ -276,7 +276,7 @@
 				FADE20FE2A064E8B0011BB43 /* SnapKit */,
 			);
 			productName = MyImageFeed;
-			productReference = D9BBDE7829A026A60045A408 /* MyImageFeed.app */;
+			productReference = D9BBDE7829A026A60045A408 /* ImageFeed.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -294,7 +294,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D9BBDE7329A026A60045A408 /* Build configuration list for PBXProject "MyImageFeed" */;
+			buildConfigurationList = D9BBDE7329A026A60045A408 /* Build configuration list for PBXProject "ImageFeed" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -313,7 +313,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D9BBDE7729A026A60045A408 /* MyImageFeed */,
+				D9BBDE7729A026A60045A408 /* ImageFeed */,
 			);
 		};
 /* End PBXProject section */
@@ -509,13 +509,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4NL84SD4L4;
+				DEVELOPMENT_TEAM = GQ2W38NG9G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyImageFeed/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -524,7 +524,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = manapov.m0996.MyImageFeed123123;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.777EXX.ImageFeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -542,13 +542,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4NL84SD4L4;
+				DEVELOPMENT_TEAM = GQ2W38NG9G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyImageFeed/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -557,7 +557,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = manapov.m0996.MyImageFeed123123;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.777EXX.ImageFeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -571,7 +571,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D9BBDE7329A026A60045A408 /* Build configuration list for PBXProject "MyImageFeed" */ = {
+		D9BBDE7329A026A60045A408 /* Build configuration list for PBXProject "ImageFeed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D9BBDE8A29A026A80045A408 /* Debug */,
@@ -580,7 +580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D9BBDE8C29A026A80045A408 /* Build configuration list for PBXNativeTarget "MyImageFeed" */ = {
+		D9BBDE8C29A026A80045A408 /* Build configuration list for PBXNativeTarget "ImageFeed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D9BBDE8D29A026A80045A408 /* Debug */,
