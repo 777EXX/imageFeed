@@ -2,7 +2,7 @@
 //  AuthConfiguration.swift
 //  ImageFeed
 //
-//  Created by Alexey on 28.04.2023.
+//  Created by Alexey on 04.05.2023.
 //
 
 import Foundation
@@ -15,16 +15,16 @@ struct AuthConfiguration {
     let defaultBaseURL: String
     let authURLString: String
     
-    static var standart: AuthConfiguration {
+    static var standard: AuthConfiguration {
         return AuthConfiguration(accessKey: Constants.accessKey,
                                  secretKey: Constants.secretKey,
                                  redirectURI: Constants.redirectURI,
                                  accessScope: Constants.accessScope,
-                                 authURLString: Constants.unsplashAuthorizeURLString,
-                                 defaultBaseURL: Constants.defaultBaseURL)
+                                 defaultBaseURL: Constants.defaultBaseUrl,
+                                 authURLString: Constants.authorizeURl)
     }
     
-    init(accessKey: String, secretKey: String, redirectURI: String, accessScope: String, authURLString: String, defaultBaseURL: String) {
+    init(accessKey: String, secretKey: String, redirectURI: String, accessScope: String, defaultBaseURL: String, authURLString: String) {
         self.accessKey = accessKey
         self.secretKey = secretKey
         self.redirectURI = redirectURI

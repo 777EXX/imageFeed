@@ -2,33 +2,37 @@
 //  ProfileImageService.swift
 //  ImageFeed
 //
-//  Created by Alexey on 03.04.2023.
+//  Created by Alexey on 04.04.2023.
 //
 
 import Foundation
 
 final class ProfileImageService: ProfileImageServiceProtocol {
     
-    private let session = URLSession.shared
-    private var task: URLSessionTask?
+    static let shared = ProfileImageService()
+    static let didChangeNotification = Notification.Name("ProfileImageProviderDidChange")
     
-    func fetchProfileImageURL(username: String, token: String,
-                              _ completion: @escaping (Result<String, Error>) -> Void)  {
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private(set) var avatarURL: String?
+    
+    func fetchProfileImageURL(token: String, username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
+        
         assert(Thread.isMainThread)
-        if task != nil {
-            return
-        }
+        if task != nil { return }
         
         var request = URLRequest.makeHTTPRequest(path: "/users/\(username)", httpMethod: "GET")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        let task = session.objectTask(for: request) { (result:Result<UserResult, Error>) in
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<ProfileImage, Error>) in
+            guard let self = self else { return }
             switch result {
             case .success(let userResult):
-                guard let smallSizeURL = userResult.profileImage.small else { return }
-                completion(.success(smallSizeURL))
+                let smallImage = userResult.profileImage.small
+                self.avatarURL = smallImage
+                completion(.success(self.avatarURL!))
             case .failure(let error):
-                print(error)
+                completion(.failure(error))
             }
         }
         self.task = task

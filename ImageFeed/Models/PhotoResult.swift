@@ -2,7 +2,7 @@
 //  PhotoResult.swift
 //  ImageFeed
 //
-//  Created by Alexey on 15.04.2023.
+//  Created by Alexey on 17.04.2023.
 //
 
 import Foundation
@@ -14,9 +14,9 @@ struct PhotoResult: Codable {
     let height: Int
     let likedByUser: Bool
     let description: String?
-    let urls: UrlsResult
+    let urls: UrlsResult?
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case id = "id"
         case createdAt = "created_at"
         case width = "width"
@@ -28,6 +28,6 @@ struct PhotoResult: Codable {
 }
 
 struct UrlsResult: Codable {
-    let full: String?
-    let thumb: String?
+    let full: String
+    let thumb: String
 }

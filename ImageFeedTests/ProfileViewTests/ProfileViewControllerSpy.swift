@@ -2,25 +2,22 @@
 //  ProfileViewControllerSpy.swift
 //  ImageFeedTests
 //
-//  Created by Alexey on 01.05.2023.
+//  Created by Alexey on 10.05.2023.
 //
 
-import UIKit
+import Foundation
 @testable import ImageFeed
 
 final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     var presenter: ImageFeed.ProfileViewPresenterProtocol?
-    var accountAvatarImage = UIImageView()
+    let profileView = ProfileView()
+    let imagesService = ProfileImageServiceStub()
+    let profileImage = "https://kafel.ee/wp-content/uploads/2019/02/013-duck.png"
     
-    func updateAvatar(_ imageView: UIImageView) {
-        accountAvatarImage.image = imageView.image
+    func updateAvatar() {
+        imagesService.setImage(stringURL: profileImage)
     }
     
-    func updateProfileDetails() {
-        
-    }
-    
-    var profileService: ImageFeed.ProfileServiceProtocol?
-    
+    func updateProfileDetails(profile: ImageFeed.Profile?) {}
     
 }

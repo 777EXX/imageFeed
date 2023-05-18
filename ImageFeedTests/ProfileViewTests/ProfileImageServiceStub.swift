@@ -2,23 +2,22 @@
 //  ProfileImageServiceStub.swift
 //  ImageFeedTests
 //
-//  Created by Alexey on 04.05.2023.
+//  Created by Alexey on 13.05.2023.
 //
 
-import Foundation
+import UIKit
+import Kingfisher
 @testable import ImageFeed
 
 final class ProfileImageServiceStub: ProfileImageServiceProtocol {
-    func fetchProfileImageURL(username: String, token: String, _ completion: @escaping (Result<String, Error>) -> Void) {
-        let mockError = mockError()
-        if token != "" {
-            counter += 1
-            completion(.success(expectedAnswer))
-        } else {
-            completion(.failure(mockError))
-        }
-    }
+    var avatarURL: String?
     
-    var expectedAnswer = "yahooo"
-    var counter = 0
+    let avatarImage = UIImageView()
+    
+    func fetchProfileImageURL(token: String, username: String, _ completion: @escaping (Result<String, Error>) -> Void) {}
+    
+    func setImage(stringURL: String) {
+        guard let url = URL(string: stringURL) else { return }
+        avatarImage.kf.setImage(with: url)
+    }
 }

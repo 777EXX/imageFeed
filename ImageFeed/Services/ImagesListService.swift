@@ -2,40 +2,40 @@
 //  ImagesListService.swift
 //  ImageFeed
 //
-//  Created by Alexey on 15.04.2023.
+//  Created by Alexey on 17.04.2023.
 //
 
 import Foundation
+
 final class ImagesListService: ImagesListServiceProtocol {
     
-    var photos: [Photo] = []
-    private var lastLoadedPage: Int?
-    private let session = URLSession.shared
-    private var task: URLSessionTask?
-    var dateService: DateService?
-    
+    static let shared = ImagesListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
-    func fetchPhotosNextPage(_ token: String?) {
-        guard let token = token else { return }
-        defineCurrentPage()
-        if task != nil {
-            return
-        }
-        assert(Thread.isMainThread)
-        var request = URLRequest.makeHTTPRequest(path: "/photos" + "/?page=\(lastLoadedPage ?? 0)", httpMethod: "GET")
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var likeTask: URLSessionTask?
+    private(set) var photos: [Photo] = []
+    private var lastLoadedPage: Int?
+    
+    func fetchPhotosNextPage() {
         
-        let task = session.objectTask(for: request) {
-            [weak self] (result: Result<[PhotoResult], Error>) in
+        assert(Thread.isMainThread)
+        if task != nil { return }
+        
+        let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
+        
+        var request = URLRequest.makeHTTPRequest(path: "/photos/?page=\(nextPage)", httpMethod: "GET")
+        request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
+        
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
             guard let self = self else { return }
-            
             switch result {
             case .success(let photosResult):
                 photosResult.forEach { photo in
-                    let date = self.dateService?.toDate(photo.createdAt)
-                    guard let thumbImage = photo.urls.thumb,
-                          let fullImage = photo.urls.full else { return }
+                    let date = stringToDateFormatter(string: photo.createdAt)
+                    guard let thumbImage = photo.urls?.thumb,
+                          let fullImage = photo.urls?.full else { return }
                     self.photos.append(Photo(id: photo.id,
                                              size: CGSize(width: photo.width, height: photo.height),
                                              createdAt: date,
@@ -48,45 +48,51 @@ final class ImagesListService: ImagesListServiceProtocol {
                     name: ImagesListService.didChangeNotification,
                     object: self,
                     userInfo: ["Photos": self.photos])
-            case .failure(let error):
-                print(error)
+                self.task = nil
+                self.lastLoadedPage = nextPage
+                UIBlockingProgressHUD.dismiss()
+            case .failure(_):
+                self.task = nil
             }
-            self.task = nil
         }
-        task.resume()
         self.task = task
+        task.resume()
     }
     
-    func changeLike(photoID: String, isLiked: Bool, completion: @escaping (Result<Void,Error>) -> Void) {
-        let httpMethod = isLiked == true ? "DELETE" : "POST"
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
         
-        var request = URLRequest.makeHTTPRequest(path: "/photos" + "/\(photoID)" + "/like",
-                                                 httpMethod: "\(httpMethod)")
+        assert(Thread.isMainThread)
+        if likeTask != nil { return }
         
+        let method = isLike ? "POST" : "DELETE"
+        
+        var request = URLRequest.makeHTTPRequest(path: "/photos/\(photoId)/like", httpMethod: method)
         request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
         
-        session.dataTask(with: request) { _, response, error in
-            if let response = response,
-               let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                if 200...299 ~= statusCode {
-                    completion(.success(Void()))
-                } else {
-                    print(ProcessingErrors.catchNetworkingError(statusCode: statusCode))
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeRequest, Error>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let likeResponce):
+                if let index = self.photos.firstIndex(where: { $0.id == photoId}) {
+                    let likeChange = likeResponce.photo
+                    let photo = self.photos[index]
+                    let newPhoto = Photo(id: photo.id,
+                                         size: photo.size,
+                                         createdAt: photo.createdAt,
+                                         welcomeDescription: photo.welcomeDescription,
+                                         thumbImageURL: photo.thumbImageURL,
+                                         largeImageURL: photo.largeImageURL,
+                                         isLiked: likeChange.likedByUser)
+                    self.photos.withReplaced(itemAt: index, newValue: newPhoto)
+                    self.likeTask = nil
+                    completion(.success(()))
                 }
-            } else {
-                if let error = error {
-                    completion(.failure(error))
-                }
+            case .failure(let error):
+                self.likeTask = nil
+                completion(.failure(error))
             }
         }
-        .resume()
-    }
-    
-    private func defineCurrentPage() {
-        if lastLoadedPage == nil {
-            lastLoadedPage = 1
-        } else {
-            lastLoadedPage! += 1
-        }
+        self.likeTask = task
+        task.resume()
     }
 }

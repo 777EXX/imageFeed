@@ -2,88 +2,97 @@
 //  ImageFeedTests.swift
 //  ImageFeedTests
 //
-//  Created by Alexey on 28.04.2023.
+//  Created by Alexey on 04.05.2023.
 //
 
-import XCTest
 @testable import ImageFeed
+import XCTest
 
 final class WebViewTests: XCTestCase {
     
     func testViewControllerCallsViewDidLoad() {
-        // Given:
-        let webViewController = WebViewViewController()
+        //given
+        let webViewViewController = WebViewViewController()
         let presenter = WebViewPresenterSpy()
-        webViewController.presenter = presenter
-        presenter.view = webViewController
-        // When:
-        _ = webViewController.view
-        // Then:
+        webViewViewController.presenter = presenter
+        presenter.view = webViewViewController
+        
+        //when
+        _ = webViewViewController.view
+        
+        //then
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
     func testPresenterCallsLoadRequest() {
-        // Given:
+        //given
         let viewController = WebViewViewControllerSpy()
-        let authHelper = AuthHelper(configuration: .standart)
+        let authHelper = AuthHelper()
         let presenter = WebViewPresenter(authHelper: authHelper)
         viewController.presenter = presenter
         presenter.view = viewController
-        // When:
-        presenter.sentRequestToUnsplashAPI()
-        XCTAssertTrue(viewController.loadRequestDidCalled)
+        
+        //when
+        presenter.viewDidLoad()
+        
+        //then
+        XCTAssertTrue(viewController.loadCalled)
     }
     
     func testProgressVisibleWhenLessThenOne() {
-        // Given:
-        let authHelper = AuthHelper(configuration: .standart)
+        //given
+        let authHelper = AuthHelper()
         let presenter = WebViewPresenter(authHelper: authHelper)
         let progress: Float = 0.6
-        // When:
-        let shouldHideProgress = presenter.shouldHidProgres(for: progress)
-        // Then:
+        
+        //when
+        let shouldHideProgress = presenter.shouldHideProgress(for: progress)
+        
+        //then
         XCTAssertFalse(shouldHideProgress)
     }
     
     func testProgressHiddenWhenOne() {
-        // Given:
-        let authHelper = AuthHelper(configuration: .standart)
+        //given
+        let authHelper = AuthHelper()
         let presenter = WebViewPresenter(authHelper: authHelper)
-        let progress: Float = 1
-        // When:
-        let shouldHideProgress = presenter.shouldHidProgres(for: progress)
-        // Then:
+        let progress: Float = 1.0
+        
+        //when
+        let shouldHideProgress = presenter.shouldHideProgress(for: progress)
+        
+        //then
         XCTAssertTrue(shouldHideProgress)
     }
     
     func testAuthHelperAuthURL() {
-        // Given:
-        let configuration = AuthConfiguration.standart
+        //given
+        let configuration = AuthConfiguration.standard
         let authHelper = AuthHelper(configuration: configuration)
-        // When:
+        
+        //when
         let url = authHelper.authURL()
         let urlString = url.absoluteString
-        // Then:
-        XCTAssertTrue(urlString.contains(configuration.accessKey))
-        XCTAssertTrue(urlString.contains(configuration.accessScope))
-        XCTAssertTrue(urlString.contains(configuration.redirectURI))
-        XCTAssertTrue(urlString.contains(configuration.accessScope))
+        
+        //then
         XCTAssertTrue(urlString.contains(configuration.authURLString))
+        XCTAssertTrue(urlString.contains(configuration.accessKey))
+        XCTAssertTrue(urlString.contains(configuration.redirectURI))
+        XCTAssertTrue(urlString.contains(Parameters.code))
+        XCTAssertTrue(urlString.contains(configuration.accessScope))
     }
     
     func testCodeFromURL() {
-        // Given:
+        //given
+        let authHelper = AuthHelper()
         var urlComponents = URLComponents(string: "https://unsplash.com/oauth/authorize/native")
         urlComponents?.queryItems = [URLQueryItem(name: "code", value: "test code")]
-        let authHelper = AuthHelper(configuration: .standart)
-        // When:
+        
+        //when
         guard let url = urlComponents?.url else { return }
-        guard let code = authHelper.code(from: url) else { return }
-        // Then:
+        let code = authHelper.code(from: url)
+        
+        //then
         XCTAssertEqual(code, "test code")
     }
 }
-
-
-
-

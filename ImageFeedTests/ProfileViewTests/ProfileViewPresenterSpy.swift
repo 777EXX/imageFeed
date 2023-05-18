@@ -2,59 +2,31 @@
 //  ProfileViewPresenterSpy.swift
 //  ImageFeedTests
 //
-//  Created by Alexey on 01.05.2023.
+//  Created by Alexey on 10.05.2023.
 //
 
 import UIKit
 @testable import ImageFeed
 
 final class ProfileViewPresenterSpy: ProfileViewPresenterProtocol {
-    var profile: ImageFeed.Profile?
-    var avatarURL: String?
     var view: ImageFeed.ProfileViewControllerProtocol?
-    var viewDidLoad: Bool = false
-    var stringForDownload = ""
-    
-    var profileService: ImageFeed.ProfileServiceProtocol?
-    
     var profileImageService: ImageFeed.ProfileImageServiceProtocol?
+    var viewDidLoad: Bool = false
+    var showLogoutAlert: Bool = false
+    var presentedViewController: UIViewController?
     
-    func showAlert(_ viewController: UIViewController) {
-        
+    func showLogoutAlert(vc: UIViewController) {
+        showLogoutAlert = true
+        presentedViewController = vc
     }
     
-    func setupAvatarObserver() {
-        
-    }
-    
-    func setupProfileInfoObserver() {
-        
-    }
-    
-    func downloadAvatarImage(_ stringURL: String) {
-        
-    }
-    
-    func setupAvatarImage(_ imageView: UIImageView) {
-        
-    }
-    
-    func downloadAvatarImage() {
-        
-    }
-    
-    func showLogoutAlert(controller: UIViewController) {
-        
-    }
-    
-    func setupObservers() {
+    func profileImageObserver() {
         viewDidLoad = true
     }
     
-    func fetchProfile() {
+    func profileInfoObserver() {
         
     }
-
     
- 
+    
 }
